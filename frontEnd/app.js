@@ -171,7 +171,91 @@ function renderProductsView() {
   `;
 }
 function renderCartView() {
-  return `<section class="view-section"></section>`;
+  const cartItems = getCart();
+  const total = getCartTotal();
+
+  if (cartItems.length === 0) {
+    return `
+      <section class="view-section">
+        <header class="section-header">
+          <div>
+            <h2 class="section-title">
+              <span class="section-title-icon">🛒</span>
+              Your cart
+            </h2>
+            <p class="section-subtitle">
+              Add a few demo products to see how the cart page will feel.
+            </p>
+          </div>
+          <button class="btn btn-ghost" data-route="products">
+            Browse products
+          </button>
+        </header>
+        <div class="cart-empty">
+          <h3>Cart is empty (on purpose).</h3>
+          <p>
+            This prototype only keeps items in memory.
+            Reloading the page will reset everything.
+          </p>
+          <button class="btn btn-primary" style="margin-top: 1rem;" data-route="products">
+            Add demo items
+          </button>
+        </div>
+      </section>
+    `;
+  }
+
+  const list = cartItems
+    .map(
+      (item) => `
+      <article class="cart-item">
+        <div class="cart-item-main">
+          <span class="cart-item-name">${item.name}</span>
+          <span class="cart-item-meta">
+            $${item.price} • ${item.tag} • In demo cart
+          </span>
+        </div>
+        <div class="cart-item-actions">
+          <span class="qty-badge">x${item.qty}</span>
+          <button class="btn-icon btn-remove" data-product-id="${item.id}" aria-label="Remove from cart">
+            ✕
+          </button>
+        </div>
+      </article>
+    `
+    )
+    .join("");
+
+  return `
+    <section class="view-section">
+      <header class="section-header">
+        <div>
+          <h2 class="section-title">
+            <span class="section-title-icon">🛒</span>
+            Your cart
+          </h2>
+          <p class="section-subtitle">
+            Items live only in memory – this keeps the demo safe and easy to reset.
+          </p>
+        </div>
+        <button class="btn btn-ghost" data-route="products">
+          Add more items
+        </button>
+      </header>
+      <div class="cart-list">
+        ${list}
+      </div>
+      <div class="cart-summary">
+        <div>
+          <span>Demo total</span>
+          <strong>$${total.toFixed(2)}</strong>
+        </div>
+        <button class="btn btn-primary" disabled title="Checkout is disabled in this demo">
+          Checkout disabled
+        </button>
+      </div>
+    </section>
+  `;
 }
 
 function renderLoginView() {
