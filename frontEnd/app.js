@@ -123,9 +123,53 @@ function renderHomeView() {
 }
 
 function renderProductsView() {
-  return `<section class="view-section"></section>`;
+  return `
+    <section class="view-section">
+      <header class="section-header">
+        <div>
+          <h2 class="section-title">
+            <span class="section-title-icon">🧩</span>
+            Demo products
+          </h2>
+          <p class="section-subtitle">
+            These are dummy items to show how a products grid and cart flow could look.
+          </p>
+        </div>
+        <button class="btn btn-ghost" data-route="cart">
+          View cart
+        </button>
+      </header>
+      <div class="products-grid">
+        ${dummyProducts
+          .map(
+            (p) => `
+          <article class="product-card">
+            <div class="product-body">
+              <div class="product-tag">
+                <span>${p.tag}</span>
+                <span>•</span>
+                <span>${p.badge}</span>
+              </div>
+              <h3 class="product-name">${p.name}</h3>
+              <p class="product-desc">${p.description}</p>
+            </div>
+            <div class="product-meta">
+              <div>
+                <div class="product-price">$${p.price}</div>
+                <div class="product-pill">Demo only</div>
+              </div>
+              <button class="btn btn-primary btn-add-to-cart" data-product-id="${p.id}">
+                Add to cart
+              </button>
+            </div>
+          </article>
+        `
+          )
+          .join("")}
+      </div>
+    </section>
+  `;
 }
-
 function renderCartView() {
   return `<section class="view-section"></section>`;
 }
