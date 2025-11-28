@@ -1,3 +1,39 @@
+// Product data
+const dummyProducts = [
+  {
+    id: "kb-mech",
+    name: "Mechanical Keyboard Pro",
+    description: "Hot-swappable switches, per-key RGB, USB‑C, built for builders.",
+    price: 129,
+    tag: "Peripherals",
+    badge: "New",
+  },
+  {
+    id: "headset-wireless",
+    name: "Lag‑Free Wireless Headset",
+    description: "Low-latency audio with AI-powered noise isolation for crisp calls.",
+    price: 89,
+    tag: "Audio",
+    badge: "Bestseller",
+  },
+  {
+    id: "monitor-4k",
+    name: "27\" 4K Creator Display",
+    description: "Color-accurate IPS panel with 144Hz refresh for play and work.",
+    price: 399,
+    tag: "Monitors",
+    badge: "Creator",
+  },
+  {
+    id: "chair-ergonomic",
+    name: "ErgoByte Chair",
+    description: "Ergonomic chair with breathable mesh and 4D armrests.",
+    price: 259,
+    tag: "Workspace",
+    badge: "Comfort",
+  },
+];
+
 //  ROUTES
 const routes = {
   home: "home",
@@ -6,6 +42,44 @@ const routes = {
   login: "login",
   signup: "signup",
 };
+
+// Cart state
+let cart = [];
+
+// Cart functions
+function getCart() {
+  return cart;
+}
+
+function addToCart(productId) {
+  const product = dummyProducts.find((p) => p.id === productId);
+  if (!product) return;
+
+  const existing = cart.find((item) => item.id === productId);
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({ ...product, qty: 1 });
+  }
+  updateCartCount();
+}
+
+function removeFromCart(productId) {
+  cart = cart.filter((item) => item.id !== productId);
+  updateCartCount();
+}
+
+function updateCartCount() {
+  const countEl = document.getElementById("cart-count");
+  if (countEl) {
+    const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+    countEl.textContent = totalQty.toString();
+  }
+}
+
+function getCartTotal() {
+  return cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+}
 
 //  NAVIGATION 
 function navigateTo(route) {
