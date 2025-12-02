@@ -20,7 +20,7 @@ Admins can manage products, categories, inventory, and orders through a dedicate
 
 ## 🛠️ Tech Stack
 
-**Frontend:** HTML, CSS, JavaScript (or React if used)  
+### **Frontend:** HTML, CSS, JavaScript (or React if used)  
 ---
 
 ## 📦 Installation & Setup
